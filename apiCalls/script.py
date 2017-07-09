@@ -19,9 +19,9 @@ class Contaminate:
         if response.status_code == requests.codes.ok:
             self.raw = response.json()
             return self
+            print(error)
         else:
           response.status()
-          print(error)
 
 
     def return_data(self):
