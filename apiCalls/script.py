@@ -28,7 +28,7 @@ class Contaminate:
         for i in self.raw:
             test = parser.parse(i['sample_date'])
             # print(test.date() - datetime.date.today())
-            if datetime.date.today() - test.date() < datetime.timedelta(days = 60):
+            if datetime.date.today() - test.date() < datetime.timedelta(days = 90):
                 self.results.append(i)
         return self.results
 print('a')
