@@ -11,11 +11,66 @@ import psutil
 app = Flask(__name__)
 CORS(app)
 
+testRes =    {'key': [{
+            'depth_in_meters': '0.2',
+            'filter': 'Total',
+            'lat_dd_wgs84': '30.3018400754222',
+            'location': {
+                'type': 'Point',
+                'coordinates': [-97.600312, 30.30184]
+            },
+            'lon_dd_wgs84': '-97.6003116725693',
+            'medium': 'Surface Water',
+            'method': 'SM 9223 B',
+            'param_type': 'Bacteria/Pathogens',
+            'parameter': 'E COLI BACTERIA',
+            'project': 'Austin Lakes Index (ALI)',
+            'ref_no': '2566556',
+            'result': '1',
+            'sample_date': '2017-04-20T12:30:00.000',
+            'sample_id': '4345-WLL @ MIDEAST LWL4 SURF',
+            'sample_ref_no': '516671',
+            'sample_site_no': '4345',
+            'site_name': 'Lake Long mid-lake of Eastern Arm (LWL4)',
+            'site_type': 'Lake',
+            'time_null': 'false',
+            'unit': 'MPN/100ML',
+            'watershed': 'Walter E. Long Lake'
+        }, {
+            'depth_in_meters': '0.2',
+            'filter': 'Total',
+            'lat_dd_wgs84': '30.2921531272374',
+            'location': {
+                'type': 'Point',
+                'coordinates': [-97.609229, 30.292153]
+            },
+            'lon_dd_wgs84': '-97.6092289657427',
+            'medium': 'Surface Water',
+            'method': 'SM 9223 B',
+            'param_type': 'Bacteria/Pathogens',
+            'parameter': 'E COLI BACTERIA',
+            'project': 'Austin Lakes Index (ALI)',
+            'ref_no': '2566577',
+            'result': '12.1',
+            'sample_date': '2017-04-20T13:20:00.000',
+            'sample_id': '4346-WLL @ MIDWEST LWL5 SUR',
+            'sample_ref_no': '515060',
+            'sample_site_no': '4346',
+            'site_name': 'Lake Long mid-lake of Western Arm (LWL5)',
+            'site_type': 'Lake',
+            'time_null': 'false',
+            'unit': 'MPN/100ML',
+            'watershed': 'Walter E. Long Lake'
+        }]
+    }
+
+
+
 @app.route('/displayparams', methods=['GET', 'POST'])
 def getContaminants():
 
     req = request.form['examplekey']
-
+    return jsonify(testRes)
     if req:
 
         test_par = req
@@ -29,12 +84,12 @@ def getContaminants():
             test_unit = 'NTRU'
         if test_par== 'WATER TEMPERATURE':
             test_unit = 'Deg. Celsius'
-        params = {'parameter': test_par, 'unit': test_unit}
+        params = {'parameter': test_par, 'unit': test_unit, 'watershed': "Barton Creek", 'site_type': 'Stream'}
         payload = API.Contaminate().query_site(API._url, params).return_data()
-        print(payload)
+        # print(payload)
         dummyDict = {"key": payload}
-        # return jsonify(payload[0])
-        return jsonify(dummyDict)
+        print(dummyDict)
+        # return jsonify(dummyDict)
 
     else:
         response.status()
