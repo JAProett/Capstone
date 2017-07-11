@@ -24,11 +24,11 @@ class Contaminate:
           response.status()
 
 
-    def return_data(self):
+    def return_data(self, daysago):
         for i in self.raw:
             test = parser.parse(i['sample_date'])
             # print(test.date() - datetime.date.today())
-            if datetime.date.today() - test.date() < datetime.timedelta(days = 180):
+            if datetime.date.today() - test.date() < datetime.timedelta(days = float(daysago)):
                 self.results.append(i)
         return self.results
 print('a')

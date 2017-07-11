@@ -70,7 +70,8 @@ testRes =    {'key': [{
 def getContaminants():
 
     req = request.form['examplekey']
-    return jsonify(testRes)
+    reqdays = request.form['daysago']
+    # return jsonify(testRes)
     if req:
 
         test_par = req
@@ -84,12 +85,12 @@ def getContaminants():
             test_unit = 'NTRU'
         if test_par== 'WATER TEMPERATURE':
             test_unit = 'Deg. Celsius'
-        params = {'parameter': test_par, 'unit': test_unit, 'watershed': "Barton Creek", 'site_type': 'Stream'}
-        payload = API.Contaminate().query_site(API._url, params).return_data()
+        params = {'parameter': test_par, 'unit': test_unit, 'watershed': 'Barton Creek'}
+        payload = API.Contaminate().query_site(API._url, params).return_data(reqdays)
         # print(payload)
         dummyDict = {"key": payload}
         print(dummyDict)
-        # return jsonify(dummyDict)
+        return jsonify(dummyDict)
 
     else:
         response.status()

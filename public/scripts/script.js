@@ -1,7 +1,12 @@
-var map = L.map('mapid').setView([30.25, -97.75], 10);
+// $(document).ready(function() {
 
-var geojsonLayer = new L.GeoJSON.AJAX('../assets/WatershedFloodplainModel.json');
-// geojsonLayer.addTo(map);
+let map = L.map('mapid').setView([30.25, -97.75], 10);
+let shp = '../assets/Water_Quality_Sampling_Data.csv'
+let redCircle = new L.CircleMarker({
+    color: 'red',
+    fillColor: '#ff0000',
+    fillOpacity: 0.5
+});
 
 L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
@@ -10,10 +15,12 @@ L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/M
 
 
 function getData() {
-    var formData = new FormData();
-    var xhr = new XMLHttpRequest();
+    let formData = new FormData();
+    let xhr = new XMLHttpRequest();
     xhr.open("POST", "http://127.0.0.1:8000/displayparams");
     formData.append("examplekey", "E COLI BACTERIA");
+	formData.append("daysago", '100');
+
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4) {
             // console.log(xhr.response);
@@ -24,9 +31,27 @@ function getData() {
                 let arr = response.key
                 console.log(arr);
                 arr.forEach(function(el) {
-                    L.marker([el.lat_dd_wgs84, el.lon_dd_wgs84]).addTo(map).bindPopup(el.site_name)
-                    console.log(el.lat_dd_wgs84);
-					console.log(geojsonLayer);
+					if (el.result < 90) {
+						L.circleMarker([el.lat_dd_wgs84, el.lon_dd_wgs84],{
+						    color: 'green',
+						    fillColor: '#00ff00',
+						    fillOpacity: 0.5
+						}).addTo(map).bindPopup(el.site_name)
+					}
+                    if (el.result >= 90 && el.result < 125) {
+						L.circleMarker([el.lat_dd_wgs84, el.lon_dd_wgs84],{
+						    color: 'yellow',
+						    fillColor: '#ffff00',
+						    fillOpacity: 0.5
+						}).addTo(map).bindPopup(el.result)
+                    }
+					if (el.result >= 125) {
+						L.circleMarker([el.lat_dd_wgs84, el.lon_dd_wgs84],{
+						    color: 'red',
+						    fillColor: '#ff0000',
+						    fillOpacity: 0.5
+						}).addTo(map).bindPopup(el.result)
+					}
                 });
             };
         }
@@ -40,6 +65,10 @@ window.onload = function() {
     document.getElementById("theButton").onclick = function(ev) {
         ev.preventDefault()
         getData()
+
     };
 
 }
+
+
+// });
