@@ -60,41 +60,35 @@ testRes =    {'key': [{
             'site_type': 'Lake',
             'time_null': 'false',
             'unit': 'MPN/100ML',
-            'watershed': 'Walter E. Long Lake'
+            'watershed': 'Barton Creek'
         }]
     }
 
-
-
 @app.route('/displayparams', methods=['GET', 'POST'])
 def getContaminants():
-
     req = request.form['examplekey']
     reqdays = request.form['daysago']
-    # return jsonify(testRes)
+    reqwatershed = request.form['watershed']
+# //////////////////////tester///////////////////////////
+    return jsonify(testRes)
+# ///////////////////////////////////////////////////////
     if req:
-
         test_par = req
         if test_par=='E COLI BACTERIA':
             test_unit = 'MPN/100ML'
-        if test_par== 'DISSOLVED OXYGEN':
-            test_unit = 'MG/L'
-        if test_par== 'PH':
-            test_unit = 'Standard units'
-        if test_par== 'TURBIDITY':
-            test_unit = 'NTRU'
-        if test_par== 'WATER TEMPERATURE':
-            test_unit = 'Deg. Celsius'
-        params = {'parameter': test_par, 'unit': test_unit, 'watershed': 'Barton Creek'}
+        params = {'parameter': test_par, 'unit': test_unit, 'watershed': reqwatershed}
         payload = API.Contaminate().query_site(API._url, params).return_data(reqdays)
         # print(payload)
         dummyDict = {"key": payload}
         print(dummyDict)
         return jsonify(dummyDict)
-
     else:
         response.status()
         print('error')
+
+@app.route('/statistics', methods=['POST'])
+def analyize():
+    return stuff
 
 
 app.run(host='0.0.0.0', port=8000)
