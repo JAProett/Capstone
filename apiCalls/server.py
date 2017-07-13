@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, Response, jsonify
-import script as API
+import apicall as API
 import random, json
 import requests
 import datetime
@@ -7,6 +7,9 @@ from dateutil import parser
 import os
 from flask_cors import CORS, cross_origin
 import psutil
+# import calc as Stats
+import dbconfig as db
+
 
 app = Flask(__name__)
 CORS(app)
@@ -86,9 +89,34 @@ def getContaminants():
         response.status()
         print('error')
 
-@app.route('/statistics', methods=['POST'])
+@app.route('/statistics', methods=['GET'])
 def analyize():
-    return stuff
+    raw = db.get_all_loc()
+    print(raw)
+    return jsonify(raw)
 
+@app.route('/statistics/sitenameplaceholder', method=['POST'])
+def get_defalut():
+    selected_stite = request.form['SITE_NAME']
+
+# @app.route('/statistics/sitenameplaceholder', method=['POST'])
+# def makePrediction():
+    # inter = request.form['Intercept']
+    # water_temp =request.form['Water Temp']
+    # watertemp_mean = request.form['Water Temp Mean']
+    # ph = request.form['PH']
+    # ph_mean =request.form['PH Mean']
+    # dis = request.form['Dissolved O2']
+    # dis_mean = request.form['Dissolved O2 Mean']
+    # tur = request.form['Turbitity']
+    # tur_mean = request.form['Turbitity Mean']
+    # amb_temp = request.form['Ambiant Temp']
+    # ambtemp_mean = request.form['Ambiant Temp Mean']
+    # ds_rain = request.form['Days Since Rain']
+    # dsrain_mean = request.form['Days Since Rain Mean']
+    #
+    # ecloli_est = Stats.e_coli_prediction(inter, water_temp,
+    # watertemp_mean, ph, ph_mean, dis, dis_mean, tur, tur_mean,
+    # amb_temp, ambtemp_mean, ds_rain, dsrain_mean)
 
 app.run(host='0.0.0.0', port=8000)

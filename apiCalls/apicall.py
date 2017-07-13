@@ -2,10 +2,9 @@ import json
 import requests
 import datetime
 from dateutil import parser
+import dbconfig
 
 _url = 'https://data.austintexas.gov/resource/v7et-4fvp.json?$limit=50000'
-
-# use this as place holder going to be a option to toggle
 
 
 headers={"X-App-Token":"YZ8DEL6qcIIFd0Jk3OWuRXbwd"}
