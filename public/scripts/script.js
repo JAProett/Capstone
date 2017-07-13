@@ -23,12 +23,12 @@ function getData(timPar, watershed) {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://127.0.0.1:8000/displayparams');
 
-////// put input vars here from froms //////////////////////
-////// use either timePar or watershed //////
-    formData.append('examplekey', 'E COLI BACTERIA');
-	formData.append('daysago', 100);
-	formData.append('watershed', 'Barton Creek');
-//////////////////////////////////////////////////////////////
+    ////// put input vars here from froms //////////////////////
+    ////// use either timePar or watershed //////
+    // formData.append('examplekey', 'E COLI BACTERIA');
+    // formData.append('daysago', 100);
+    formData.append('watershed', 'Barton Creek');
+    //////////////////////////////////////////////////////////////
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
@@ -36,33 +36,34 @@ function getData(timPar, watershed) {
                 let arr = response.key
                 console.log(arr);
                 arr.forEach(function(el) {
-					if (el.result < 90) {
-						L.circleMarker([el.lat_dd_wgs84, el.lon_dd_wgs84],{
-						    color: 'green',
-						    fillColor: '#00ff00',
-						    fillOpacity: 0.5
-						}).addTo(map).bindPopup(el.site_name)
-					}
-                    if (el.result >= 90 && el.result < 125) {
-						L.circleMarker([el.lat_dd_wgs84, el.lon_dd_wgs84],{
-						    color: 'yellow',
-						    fillColor: '#ffff00',
-						    fillOpacity: 0.5
-						}).addTo(map).bindPopup(el.site_name)
+                    if (el.result < 90) {
+                        L.circleMarker([el.lat_dd_wgs84, el.lon_dd_wgs84], {
+                            color: 'green',
+                            fillColor: '#00ff00',
+                            fillOpacity: 0.5
+                        }).addTo(map).bindPopup(el.site_name)
                     }
-					if (el.result >= 125) {
-						L.circleMarker([el.lat_dd_wgs84, el.lon_dd_wgs84],{
-						    color: 'red',
-						    fillColor: '#ff0000',
-						    fillOpacity: 0.5
-						}).addTo(map).bindPopup(el.site_name)
-					}
+                    if (el.result >= 90 && el.result < 125) {
+                        L.circleMarker([el.lat_dd_wgs84, el.lon_dd_wgs84], {
+                            color: 'yellow',
+                            fillColor: '#ffff00',
+                            fillOpacity: 0.5
+                        }).addTo(map).bindPopup(el.site_name)
+                    }
+                    if (el.result >= 125) {
+                        L.circleMarker([el.lat_dd_wgs84, el.lon_dd_wgs84], {
+                            color: 'red',
+                            fillColor: '#ff0000',
+                            fillOpacity: 0.5
+                        }).addTo(map).bindPopup(el.site_name)
+                    }
                 });
             };
         }
     }
     xhr.send(formData);
 };
+
 function test() {
     let formData = new FormData();
     let xhr = new XMLHttpRequest();
@@ -124,3 +125,11 @@ function testcalc() {
     }
     xhr.send(formData);
 };
+
+
+
+L.circleMarker([el.lat_dd_wgs84, el.lon_dd_wgs84], {
+    color: 'green',
+    fillColor: '#00ff00',
+    fillOpacity: 0.5
+})

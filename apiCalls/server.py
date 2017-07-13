@@ -70,17 +70,14 @@ testRes =    {'key': [{
 # send in days ago and watershed name returns info from the api call
 @app.route('/displayparams', methods=['GET', 'POST'])
 def getContaminants():
-    req = request.form['examplekey']
-    reqdays = request.form['daysago']
+    # reqdays = request.form['daysago']
+    reqdays = '180'
     reqwatershed = request.form['watershed']
 # //////////////////////tester///////////////////////////
     # return jsonify(testRes)
 # ///////////////////////////////////////////////////////
-    if req:
-        test_par = req
-        if test_par=='E COLI BACTERIA':
-            test_unit = 'MPN/100ML'
-        params = {'parameter': test_par, 'unit': test_unit, 'watershed': reqwatershed}
+    if reqwatershed:
+        params = {'parameter': 'E COLI BACTERIA', 'unit': 'MPN/100ML', 'watershed': reqwatershed}
         payload = API.Contaminate().query_site(API._url, params).return_data(reqdays)
         dummyDict = {"key": payload}
         print(dummyDict)
@@ -125,4 +122,5 @@ def makePrediction():
     hi_val = stats.hi_value(std, ecloli_est)
     predict_info = {'ecoli': ecloli_est, 'hi_value': hi_val}
     return jsonify(predict_info)
+
 app.run(host='0.0.0.0', port=8000)
