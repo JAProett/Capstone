@@ -21,7 +21,7 @@ class Site(Base):
     M_DS_Rain = Column(Float)
     M_Temp = Column(Float)
     N = Column(Float)
-    E_STD = Column(Float)
+    E_std = Column(Float)
     R2 = Column(Float)
     R22 = Column(Float)
     PARM_INTERCIP = Column(Float)
@@ -58,9 +58,37 @@ def get_all_loc():
 
 
 
-Site.M_Result, Site.M_Error, Site.M_WT_Result, Site.M_PH_Result, Site.M_DIS_Result, Site.M_TUR_Result, Site.M_DS_Rain, Site.M_Temp, Site.N, Site.E_STD, Site.R2, Site.R22, Site.PARM_INTERCIP, Site.tSTAT_INTERCIP, Site.PARM_WT, Site.tSTAT_WT, Site.PARM_PH, Site.tSTAT_PH, Site.PARM_DIS, Site.tSTAT_DIS, Site.PARM_TUR, Site.tSTAT_TUR, Site.PARM_DS_Rain, Site.tSTAT_DS_Rain, Site.PARM_AMB_TEMP, Site.tSTAT_AMB_TEMP
 def retreave_standard(sel_loc):
+    # set params to db values
+    SITE_NAME = session.query(Site.SITE_NAME).filter_by(SITE_NAME = sel_loc).one()[0]
+    M_Result = session.query(Site.M_Result).filter_by(SITE_NAME = sel_loc).one()[0]
+    M_Error = session.query(Site.M_Error).filter_by(SITE_NAME = sel_loc).one()[0]
+    M_WT_Result = session.query(Site.M_WT_Result).filter_by(SITE_NAME = sel_loc).one()[0]
+    M_PH_Result = session.query(Site.M_PH_Result).filter_by(SITE_NAME = sel_loc).one()[0]
+    M_DIS_Result = session.query(Site.M_DIS_Result).filter_by(SITE_NAME = sel_loc).one()[0]
+    M_TUR_Result = session.query(Site.M_TUR_Result).filter_by(SITE_NAME = sel_loc).one()[0]
+    M_DS_Rain = session.query(Site.M_DS_Rain).filter_by(SITE_NAME = sel_loc).one()[0]
+    M_Temp = session.query(Site.M_Temp).filter_by(SITE_NAME = sel_loc).one()[0]
+    N = session.query(Site.N).filter_by(SITE_NAME = sel_loc).one()[0]
+    E_std = session.query(Site.E_std).filter_by(SITE_NAME = sel_loc).one()[0]
+    R2 = session.query(Site.R2).filter_by(SITE_NAME = sel_loc).one()[0]
+    R22 = session.query(Site.R22).filter_by(SITE_NAME = sel_loc).one()[0]
+    PARM_INTERCIP = session.query(Site.PARM_INTERCIP).filter_by(SITE_NAME = sel_loc).one()[0]
+    tSTAT_INTERCIP = session.query(Site.tSTAT_INTERCIP).filter_by(SITE_NAME = sel_loc).one()[0]
+    PARM_WT = session.query(Site.PARM_WT).filter_by(SITE_NAME = sel_loc).one()[0]
+    tSTAT_WT = session.query(Site.tSTAT_WT).filter_by(SITE_NAME = sel_loc).one()[0]
+    PARM_PH = session.query(Site.PARM_PH).filter_by(SITE_NAME = sel_loc).one()[0]
+    tSTAT_PH = session.query(Site.tSTAT_PH).filter_by(SITE_NAME = sel_loc).one()[0]
+    PARM_DIS = session.query(Site.PARM_DIS).filter_by(SITE_NAME = sel_loc).one()[0]
+    tSTAT_DIS = session.query(Site.tSTAT_DIS).filter_by(SITE_NAME = sel_loc).one()[0]
+    PARM_TUR = session.query(Site.PARM_TUR).filter_by(SITE_NAME = sel_loc).one()[0]
+    tSTAT_TUR = session.query(Site.tSTAT_TUR).filter_by(SITE_NAME = sel_loc).one()[0]
+    PARM_DS_Rain = session.query(Site.PARM_DS_Rain).filter_by(SITE_NAME = sel_loc).one()[0]
+    tSTAT_DS_Rain = session.query(Site.tSTAT_DS_Rain).filter_by(SITE_NAME = sel_loc).one()[0]
+    PARM_AMB_TEMP = session.query(Site.PARM_AMB_TEMP).filter_by(SITE_NAME = sel_loc).one()[0]
+    tSTAT_AMB_TEMP = session.query(Site.tSTAT_AMB_TEMP).filter_by(SITE_NAME = sel_loc).one()[0]
+    # make a dict with values
+    params = {'SITE_NAME': SITE_NAME, 'M_Result': M_Result, 'M_Error': M_Error, 'M_WT_Result': M_WT_Result, 'M_PH_Result': M_PH_Result, 'M_DIS_Result': M_DIS_Result, 'M_TUR_Result': M_TUR_Result, 'M_DS_Rain': M_DS_Rain, 'M_Temp': M_Temp, 'N': N, 'E_std': E_std, 'R2': R2, 'R22': R22, 'PARM_INTERCIP': PARM_INTERCIP, 'tSTAT_INTERCIP': tSTAT_INTERCIP, 'PARM_WT': PARM_WT, 'tSTAT_WT': tSTAT_WT, 'PARM_PH': PARM_PH, 'tSTAT_PH': tSTAT_PH, 'PARM_DIS': PARM_DIS, 'tSTAT_DIS': tSTAT_DIS, 'PARM_TUR': PARM_TUR, 'tSTAT_TUR': tSTAT_TUR, 'PARM_DS_Rain': PARM_DS_Rain, 'tSTAT_DS_Rain': tSTAT_DS_Rain, 'PARM_AMB_TEMP': PARM_AMB_TEMP, 'tSTAT_AMB_TEMP': tSTAT_AMB_TEMP}
+    return params
 
-    # return session.query().filter_by(Site.SITE_NAME = sel_loc).one()
-    return session.query(Site).filter_by(SITE_NAME = sel_loc).all()
-print(retreave_standard("Barton Spring Pool @ Downstream Dam"))
+# print(retreave_standard("Barton Spring Pool @ Downstream Dam"))

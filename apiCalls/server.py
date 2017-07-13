@@ -7,7 +7,7 @@ from dateutil import parser
 import os
 from flask_cors import CORS, cross_origin
 import psutil
-# import calc as Stats
+import calc as stats
 import dbconfig as db
 
 
@@ -67,13 +67,14 @@ testRes =    {'key': [{
         }]
     }
 
+# send in days ago and watershed name returns info from the api call
 @app.route('/displayparams', methods=['GET', 'POST'])
 def getContaminants():
     req = request.form['examplekey']
     reqdays = request.form['daysago']
     reqwatershed = request.form['watershed']
 # //////////////////////tester///////////////////////////
-    return jsonify(testRes)
+    # return jsonify(testRes)
 # ///////////////////////////////////////////////////////
     if req:
         test_par = req
@@ -81,7 +82,6 @@ def getContaminants():
             test_unit = 'MPN/100ML'
         params = {'parameter': test_par, 'unit': test_unit, 'watershed': reqwatershed}
         payload = API.Contaminate().query_site(API._url, params).return_data(reqdays)
-        # print(payload)
         dummyDict = {"key": payload}
         print(dummyDict)
         return jsonify(dummyDict)
@@ -89,34 +89,40 @@ def getContaminants():
         response.status()
         print('error')
 
+# when stats page is open: sends the locations and names with stats on them
 @app.route('/statistics', methods=['GET'])
 def analyize():
     raw = db.get_all_loc()
     print(raw)
     return jsonify(raw)
 
-@app.route('/statistics/sitenameplaceholder', method=['POST'])
+# Send site name gets mean stats////////////////////////////////////////////
+@app.route('/statistics/sitesample', methods=['POST'])
 def get_defalut():
-    selected_stite = request.form['SITE_NAME']
+    selected_site = request.form['SITE_NAME']
+    site_standards = db.retreave_standard(selected_site)
+    # print(site_standards)
+    return jsonify(site_standards)
 
-# @app.route('/statistics/sitenameplaceholder', method=['POST'])
-# def makePrediction():
-    # inter = request.form['Intercept']
-    # water_temp =request.form['Water Temp']
-    # watertemp_mean = request.form['Water Temp Mean']
-    # ph = request.form['PH']
-    # ph_mean =request.form['PH Mean']
-    # dis = request.form['Dissolved O2']
-    # dis_mean = request.form['Dissolved O2 Mean']
-    # tur = request.form['Turbitity']
-    # tur_mean = request.form['Turbitity Mean']
-    # amb_temp = request.form['Ambiant Temp']
-    # ambtemp_mean = request.form['Ambiant Temp Mean']
-    # ds_rain = request.form['Days Since Rain']
-    # dsrain_mean = request.form['Days Since Rain Mean']
-    #
-    # ecloli_est = Stats.e_coli_prediction(inter, water_temp,
-    # watertemp_mean, ph, ph_mean, dis, dis_mean, tur, tur_mean,
-    # amb_temp, ambtemp_mean, ds_rain, dsrain_mean)
-
+# Send info in from table with pacage from sitesampel route returns predicted
+@app.route('/statistics/estimate', methods=['POST'])
+def makePrediction():
+    inter = request.form['PARM_INTERCIP']
+    water_temp =request.form['PARM_WT']
+    watertemp_mean = request.form['M_WT_Result']
+    ph = request.form['PARM_PH']
+    ph_mean =request.form['M_PH_Result']
+    dis = request.form['PARM_DIS']
+    dis_mean = request.form['M_DIS_Result']
+    tur = request.form['PARM_TUR']
+    tur_mean = request.form['M_TUR_Result']
+    amb_temp = request.form['PARM_AMB_TEMP']
+    ambtemp_mean = request.form['M_Temp']
+    ds_rain = request.form['PARM_DS_Rain']
+    dsrain_mean = request.form['M_DS_Rain']
+    std = request.form['E_std']
+    ecloli_est = stats.e_coli_prediction(inter, water_temp, watertemp_mean, ph, ph_mean, dis, dis_mean, tur, tur_mean, amb_temp, ambtemp_mean, ds_rain, dsrain_mean)
+    hi_val = stats.hi_value(std, ecloli_est)
+    predict_info = {'ecoli': ecloli_est, 'hi_value': hi_val}
+    return jsonify(predict_info)
 app.run(host='0.0.0.0', port=8000)
