@@ -71,7 +71,7 @@ testRes =    {'key': [{
 @app.route('/displayparams', methods=['GET', 'POST'])
 def getContaminants():
     # reqdays = request.form['daysago']
-    reqdays = '180'
+    reqdays = '360'
     reqwatershed = request.form['watershed']
 # //////////////////////tester///////////////////////////
     # return jsonify(testRes)

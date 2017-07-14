@@ -9,7 +9,7 @@ def e_coli_prediction(inter, water_temp, mean_water_temp,ph, ph_mean, dis, mean_
     if predic_ecoli < 0:
         predic_ecoli = 0
     if predic_ecoli > 140:
-        'out of scope of model'
+        predic_ecoli = 0
     return predic_ecoli
 
 def hi_value(std_firstpass, predic_ecoli):
@@ -17,4 +17,4 @@ def hi_value(std_firstpass, predic_ecoli):
         return 'out of scope of model'
 
     hival = predic_ecoli + 2 * float(std_firstpass)
-    return
+    return hival
