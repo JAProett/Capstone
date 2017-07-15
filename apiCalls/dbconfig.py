@@ -40,7 +40,7 @@ class Site(Base):
     tSTAT_AMB_TEMP = Column(Float)
     LAT_DD_WGS84 = Column(Float)
     LON_DD_WGS84 = Column(Float)
-# data = pd.read_csv('../assets/EcoliOut2.csv', index_col=False)
+# data = pd.read_csv('../front_end/assets/EcoliOut2.csv', index_col=False)
 # data.to_sql(name='sites', con=engine, if_exists='append')
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
@@ -83,7 +83,7 @@ def retreave_standard(sel_loc):
     tSTAT_DS_Rain = session.query(Site.tSTAT_DS_Rain).filter_by(SITE_NAME = sel_loc).one()[0]
     PARM_AMB_TEMP = session.query(Site.PARM_AMB_TEMP).filter_by(SITE_NAME = sel_loc).one()[0]
     tSTAT_AMB_TEMP = session.query(Site.tSTAT_AMB_TEMP).filter_by(SITE_NAME = sel_loc).one()[0]
-    
+
     # make a dict with values
     params = {'SITE_NAME': SITE_NAME, 'M_Result': M_Result, 'M_Error': M_Error, 'M_WT_Result': M_WT_Result, 'M_PH_Result': M_PH_Result, 'M_DIS_Result': M_DIS_Result, 'M_TUR_Result': M_TUR_Result, 'M_DS_Rain': M_DS_Rain, 'M_Temp': M_Temp, 'N': N, 'E_std': E_std, 'R2': R2, 'R22': R22, 'PARM_INTERCIP': PARM_INTERCIP, 'tSTAT_INTERCIP': tSTAT_INTERCIP, 'PARM_WT': PARM_WT, 'tSTAT_WT': tSTAT_WT, 'PARM_PH': PARM_PH, 'tSTAT_PH': tSTAT_PH, 'PARM_DIS': PARM_DIS, 'tSTAT_DIS': tSTAT_DIS, 'PARM_TUR': PARM_TUR, 'tSTAT_TUR': tSTAT_TUR, 'PARM_DS_Rain': PARM_DS_Rain, 'tSTAT_DS_Rain': tSTAT_DS_Rain, 'PARM_AMB_TEMP': PARM_AMB_TEMP, 'tSTAT_AMB_TEMP': tSTAT_AMB_TEMP}
     return params
