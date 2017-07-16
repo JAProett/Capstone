@@ -6,15 +6,15 @@ def e_coli_prediction(inter, water_temp, mean_water_temp,ph, ph_mean, dis, mean_
     ambtemp_com = float(amb_temp) * float(mean_amb_temp)
     dsrain_com = float(ds_rain) * float(ds_rain_mean)
     predic_ecoli = float(inter) + watertemp_com + ph_com + dis_com + tur_com + ambtemp_com + dsrain_com
-    if predic_ecoli = 0:
+    if predic_ecoli <= 0:
         predic_ecoli = 'Outside of Model Scope'
-    if predic_ecoli > 140:
-        predic_ecoli = 'Outside of Model Scope'
-    return predic_ecoli
+    else:
+        return predic_ecoli
+
 
 def hi_value(std_firstpass, predic_ecoli):
     if type(predic_ecoli) is str:
         return 'Outside of Model Scope'
-
-    hival = predic_ecoli + 2 * float(std_firstpass)
-    return hival
+    if type(predic_ecoli) is float:
+        hival = predic_ecoli + 2 * float(std_firstpass)
+        return hival

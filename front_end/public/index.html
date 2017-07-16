@@ -18,8 +18,10 @@
     <div id="mapid"></div>
     <a href="" id="theButton">Get Stats</a>
 
-    <p>Input Variables</p>
-    <table class="datatable">
+    <table class="inputtable">
+        <tr>
+            <th>Input Variables</th>
+        </tr>
         <tr>
             <th>Water Temp (C)</th>
             <td><input id="m_wt_result" type="text" value="test"></td>
@@ -45,8 +47,10 @@
             <td><input id="m_temp" type="text" value="test"></td>
         </tr>
     </table>
-<p>Paramerter Estimates</p>
-    <table class="datatable">
+    <table class="paramsdatatable">
+        <tr>
+            <th>Paramerter Estimates</th>
+        </tr>
         <tr>
             <th>Variable</th>
             <th>Parameter Estimate</th>
@@ -91,6 +95,15 @@
         </tr>
     </table>
     <a href="" id="calc">Calculate</a>
+    <div>
+        <label for="m_result">E.Coli Estimate</label>
+        <div id="m_result"></div>
+        <label for="calc_hi_val">Hi Value Estimate</label>
+        <div id="calc_hi_val"></div>
+    </div>
+    <div id ='imgdiv'>
+        <img src="" alt="">
+    </div>
 
 
 
