@@ -1,2 +1,168 @@
-#mapid { width: 800px; height: 400px; }
-font-style: oblique;
+body {
+    background-image: url("./barton-creek-greenbelt-1024x473.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #355e3b;
+}
+
+header {
+    text-align: center;
+    background-color: #355e3b;
+    width: 45vw;
+    height: 5vh;
+    margin: auto auto;
+    margin-top: 5vh;
+    color: #FFE761;
+    font-size: 2vh;
+}
+
+.maincontainer {
+    display: flex;
+    flex-flow: row;
+    justify-content:center;;
+}
+
+textarea, input[type] {
+    text-align: center;
+    width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #36454f;
+}
+
+table td {
+    border: 0.5px solid #36454f;
+    padding: 3px;
+}
+
+table th {
+    border: 0.5px solid #36454f;
+    background-color: #355e3b;
+    color: #FFE761;
+}
+
+h3 {
+    text-align: center;
+
+}
+
+.mapandtable {
+    width: 45vw;
+    /*margin: auto;*/
+    /*padding: 5px;*/
+}
+
+#mapid {
+    height: 400px;
+    border: 5px solid #355e3b;
+}
+
+.tables {
+    padding: 5px;
+    background-color: rgb(255, 255, 204);
+    border: 5px solid #355e3b;
+    border-bottom: 0px;
+}
+
+.paramscontain {
+    display: table;
+    table-layout: fixed;
+    width: auto;
+    height: 40px;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tstat {
+    color: #d3d3d3;
+}
+
+.paramsheading {
+
+}
+#theButton:hover {background-color: #3f704D}
+
+#theButton:active {
+  background-color: #3f704D;
+  box-shadow: 0 3px #666;
+  transform: translateY(2px);
+}
+#theButton {
+    display: block;
+    width: 115px;
+    height: 25px;
+    background: #355e3b;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: #FFE761;
+    font-weight: bold;
+    float: left;
+    box-shadow: 3px 3px 2px #888888;
+    margin-top: 2px;
+}
+#calc:hover {background-color: #3f704D}
+
+#calc:active {
+  background-color: #3f704D;
+  box-shadow: 0 3px #666;
+  transform: translateY(2px);
+}
+
+#calc {
+    display: block;
+    width: 115px;
+    height: 25px;
+    background: #355e3b;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: #FFE761;
+    font-weight: bold;
+    float: left;
+    margin-top: 2px;
+    box-shadow: 3px 3px 2px #888888;
+
+}
+
+.buttons {
+    justify-content: space-around;
+}
+
+.discovery {
+    width: 45vw;
+    border: 5px solid #355e3b;
+    border-left-width: 0px;
+    background-color: rgb(255, 255, 204);
+}
+
+.charts {
+    margin-top: 2vh;
+    margin-bottom: 1vh;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    padding: inherit;
+}
+
+
+#imgdiv {
+
+    padding-top: 10px;
+    margin-top: 2vh;
+    margin-right: 4vw;
+    margin-left: 3vw;
+}
+.graphic {
+    border: 5px solid #355e3b;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+
+
+}
+.results {
+    color: #646464;
+}

@@ -1,22 +1,22 @@
-const map = L.map('mapid').setView([30.38255837, -97.76970084], 9);
+const map = L.map('mapid').setView([30.29255837, -97.77570084], 10);
 
 window.onload = () => {
     L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
     }).addTo(map)
-    
+
     getSitesWithStats()
     document.getElementById('theButton').onclick = function(ev) {
         ev.preventDefault()
         getstats()
-        // test()
     };
     document.getElementById('calc').addEventListener('click', (ev) => {
         ev.preventDefault();
-        // console.log('didnt rerfrehS');
         testcalc()
     })
 }
+
+
 
 class SiteStats {
     constructor(site_name, m_result, m_err, m_wt_result, m_ph_result, m_dis_result,
@@ -81,7 +81,6 @@ function getSitesWithStats() {
     xhr.send();
 };
 
-
 function getstats() {
     let formData = new FormData();
     let xhr = new XMLHttpRequest();
@@ -93,7 +92,13 @@ function getstats() {
                 if (xhr.status == 200) {
                     let response = JSON.parse(xhr.response);
                     console.log(response);
+                    document.getElementById('calc_hi_val').value = '';
+                    document.getElementById('m_tur_result').style.backgroundColor = 'white';
+                    document.getElementById('param_tur').style.backgroundColor = 'white';
+                    document.getElementById('tstat_tur').style.backgroundColor = 'white';
+                    SiteStats.calc_hi_val = 0;
                     SiteStats.m_err = response.M_Error;
+                    SiteStats.m_result = response.M_Result;
                     SiteStats.m_wt_result = response.M_WT_Result;
                     SiteStats.m_ph_result = response.M_PH_Result;
                     SiteStats.m_dis_result = response.M_DIS_Result;
@@ -115,6 +120,8 @@ function getstats() {
                     SiteStats.tstat_ds_rain = response.tSTAT_DS_Rain;
                     SiteStats.param_amb_temp = response.PARM_AMB_TEMP;
                     SiteStats.tstat_amb_temp = response.tSTAT_AMB_TEMP;
+                    howHigh('m_result');
+                    howHigh('calc_hi_val')
                     if (response.M_TUR_Result === 0) {
                         SiteStats.m_tur_result = response.M_TUR_Result;
                         SiteStats.param_tur = response.PARM_TUR;
@@ -123,6 +130,12 @@ function getstats() {
                         document.getElementById('param_tur').value = "N/A";
                         document.getElementById('tstat_tur').value = "N/A";
                         document.getElementById('m_tur_result').readOnly = true;
+                        document.getElementById('m_tur_result').style.borderColor = '#d3d3d3';
+                        document.getElementById('param_tur').style.borderColor = '#d3d3d3';
+                        document.getElementById('tstat_tur').style.borderColor = '#d3d3d3';
+                        document.getElementById('m_tur_result').style.backgroundColor = '#d3d3d3';
+                        document.getElementById('param_tur').style.backgroundColor = '#d3d3d3';
+                        document.getElementById('tstat_tur').style.backgroundColor = '#d3d3d3';
                         document.getElementById('param_tur').readOnly = true;
                         document.getElementById('tstat_tur').readOnly = true;
                     } else {
@@ -132,33 +145,54 @@ function getstats() {
                         document.getElementById('m_tur_result').value = SiteStats.m_tur_result;
                         document.getElementById('param_tur').value = response.PARM_TUR;
                         document.getElementById('tstat_tur').value = response.tSTAT_TUR;
+                        document.getElementById("m_tur_result").style.borderColor = "#32cd32";
                         document.getElementById('m_tur_result').readOnly = false;
                         document.getElementById('param_tur').readOnly = false;
                         document.getElementById('tstat_tur').readOnly = false;
                     }
+
+                    document.getElementById('m_result').value = SiteStats.m_result;
                     let attributes_wo_tur = ['m_wt_result', 'm_ph_result', 'm_dis_result', 'm_ds_rain', 'm_temp', 'param_intercip', 'tstat_intercip', 'param_wt', 'tstat_wt', 'param_ph', 'tstat_ph', 'param_dis', 'tstat_dis', 'param_ds_rain', 'tstat_ds_rain', 'param_amb_temp', 'tstat_amb_temp'];
-                    attributes_wo_tur.forEach((el)=> {
+                    attributes_wo_tur.forEach((el) => {
                         document.getElementById(el).value = SiteStats[el];
-                        if (el.charAt(0) !== 'm'){
-                            document.getElementById(el).readOnly = true
+
+                        if (el.charAt(0) !== 'm') {
+                            document.getElementById(el).readOnly = true;
+                            document.getElementById(el).style.borderColor = '#d3d3d3';
+
+                        } else {
+                            document.getElementById(el).style.borderColor = '#32cd32';
+
                         }
                     });
                     let tstat = ['tstat_tur', 'tstat_intercip', 'tstat_wt', 'tstat_ph', 'tstat_dis', 'tstat_ds_rain', 'tstat_amb_temp'];
                     let obj = {}
-                    tstat.forEach((el)=>{
+                    tstat.forEach((el) => {
                         if (el === 'tstat_tur' && SiteStats[el] === 0) {
                             obj[el] = 20
-                        }
-                        else {
+                        } else {
                             obj[el] = SiteStats[el]
                         }
                     });
+                    let keysSorted = Object.keys(obj).sort((a, b) => {
+                        return obj[a] - obj[b]
+                    })
+                    document.getElementById(keysSorted[0]).style.backgroundColor = 'rgb(255, 0, 0)'
+                    document.getElementById(keysSorted[1]).style.backgroundColor = 'rgb(210, 0, 50)'
+                    document.getElementById(keysSorted[2]).style.backgroundColor = 'rgb(170, 0, 90)'
+                    document.getElementById(keysSorted[3]).style.backgroundColor = 'rgb(130, 0,130)'
+                    document.getElementById(keysSorted[4]).style.backgroundColor = 'rgb(90, 0, 170)'
+                    document.getElementById(keysSorted[5]).style.backgroundColor = 'rgb(50, 0, 210)'
+                    document.getElementById(keysSorted[6]).style.backgroundColor = 'rgb(0, 0, 255)'
 
 
-///////////////////////////this is going to be changes with image path/////////////////////////
-                    let num = Math.floor(Math.random() * 74)
+
+
+
+                    ///////////////////////////this is going to be changes with image path/////////////////////////
+                    let num = Math.floor(Math.random() * 74 + 1)
                     SiteStats.site_img = num
-///////////////////////////////////////////////////////////////////////////////////////////////
+                    ///////////////////////////////////////////////////////////////////////////////////////////////
                     let img_comp = document.getElementById('imgdiv');
                     let img_box = img_comp.childNodes;
                     console.log(img_box[1]);
@@ -168,7 +202,6 @@ function getstats() {
         }
         xhr.send(formData);
     } else {
-        /////////////////////// PLACEHOLDER!!!!!!!!!!!!///////////////////////////////
         console.log('select a site ');
     }
 }
@@ -199,7 +232,6 @@ function testcalc(SiteStat) {
     formData.append('PARM_DS_Rain', SiteStats.param_ds_rain);
     formData.append('PARM_AMB_TEMP', SiteStats.param_amb_temp);
     xhr.open('POST', 'http://127.0.0.1:8000/statistics/estimate');
-
     xhr.onreadystatechange = () => {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
@@ -208,14 +240,44 @@ function testcalc(SiteStat) {
                 SiteStats.m_result = response.ecoli;
                 SiteStats.calc_hi_val = response.hi_value;
                 if (SiteStats.m_result == null) {
-                    document.getElementById('m_result').innerHTML = 'Out of Scope of the Model';
-                    document.getElementById('calc_hi_val').innerHTML = 'Out of Scope of the Model';
+                    document.getElementById('m_result').value = 'Out of Scope of the Model';
+                    document.getElementById('calc_hi_val').value = 'Out of Scope of the Model';
+                    howHigh('m_result')
+                    howHigh('calc_hi_val')
                 } else {
-                    document.getElementById('m_result').innerHTML = SiteStats.m_result;
-                    document.getElementById('calc_hi_val').innerHTML = SiteStats.calc_hi_val;
+                    document.getElementById('m_result').value = SiteStats.m_result;
+                    document.getElementById('calc_hi_val').value = SiteStats.calc_hi_val;
+                    howHigh('m_result');
+                    howHigh('calc_hi_val');
                 }
             };
         }
     }
     xhr.send(formData);
 };
+
+
+///////////////// helper function to color code the results/////////
+function howHigh(ecolival) {
+    let checkval = SiteStats[ecolival];
+    if (!checkval) {
+        console.log('unknown');
+        document.getElementById(ecolival).style.backgroundColor = '#d3d3d3';
+    }
+    else if (checkval > 0 && checkval < 75) {
+        console.log('low');
+        document.getElementById(ecolival).style.backgroundColor = '#00ee00';
+    }
+    else if (checkval >= 75 && checkval < 100) {
+        console.log('med');
+        document.getElementById(ecolival).style.backgroundColor = '#FFCC00';
+    }
+    else if (checkval >= 100 && checkval < 160) {
+        console.log('high');
+        document.getElementById(ecolival).style.backgroundColor = '#FF0000';
+    }
+    else {
+        document.getElementById(ecolival).style.backgroundColor = '#d3d3d3';
+    }
+
+}
