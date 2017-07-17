@@ -16,5 +16,5 @@ def hi_value(std_firstpass, predic_ecoli):
     if type(predic_ecoli) is str:
         return 'Outside of Model Scope'
     if type(predic_ecoli) is float:
-        hival = predic_ecoli + 2 * float(std_firstpass)
+        hival = predic_ecoli + 1 * float(std_firstpass)
         return hival
