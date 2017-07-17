@@ -40,7 +40,7 @@ class Site(Base):
     tSTAT_AMB_TEMP = Column(Float)
     LAT_DD_WGS84 = Column(Float)
     LON_DD_WGS84 = Column(Float)
-# data = pd.read_csv('../front_end/public/assets/statsdata/FINAL_COMBINED_PARMSFINAL.csv', index_col=False)
+# data = pd.read_csv('../front_end/public/assets/statsdata/FINAL_COMBINED_PARMS_2.csv', index_col=False)
 # data.to_sql(name='sites', con=engine, if_exists='append')
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
