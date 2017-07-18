@@ -22,7 +22,7 @@ class SiteStats {
     constructor(site_name, m_result, m_err, m_wt_result, m_ph_result, m_dis_result,
         m_tur, m_ds_rain, m_temp, n, e_std, r2, r22, param_intercip, tstat_intercip,
         param_wt, tstat_wt, param_ph, tstat_ph, param_dis, tstat_dis, param_tur, tstat_tur,
-        param_ds_rain, tstat_ds_rain, param_amb_temp, tstat_amb_temp, calc_hi_val, site_img) {
+        param_ds_rain, tstat_ds_rain, param_amb_temp, tstat_amb_temp, calc_hi_val) {
         this.site_name = site_name;
         this.m_result = m_result;
         this.m_err = m_err;
@@ -51,7 +51,6 @@ class SiteStats {
         this.param_amb_temp = param_amb_temp;
         this.tstat_amb_temp = tstat_amb_temp;
         this.calc_hi_val = calc_hi_val;
-        this.site_img = site_img;
     }
 }
 
@@ -152,6 +151,10 @@ function getstats() {
                     }
 
                     document.getElementById('m_result').value = SiteStats.m_result;
+                    document.getElementById('r2').value = SiteStats.r22;
+                    document.getElementById('r2').style.backgroundColor = '#d3d3d3';
+
+
                     let attributes_wo_tur = ['m_wt_result', 'm_ph_result', 'm_dis_result', 'm_ds_rain', 'm_temp', 'param_intercip', 'tstat_intercip', 'param_wt', 'tstat_wt', 'param_ph', 'tstat_ph', 'param_dis', 'tstat_dis', 'param_ds_rain', 'tstat_ds_rain', 'param_amb_temp', 'tstat_amb_temp'];
                     attributes_wo_tur.forEach((el) => {
                         document.getElementById(el).value = SiteStats[el];
@@ -187,16 +190,10 @@ function getstats() {
 
 
 
-
-
-                    ///////////////////////////this is going to be changes with image path/////////////////////////
-                    let num = Math.floor(Math.random() * 74 + 1)
-                    SiteStats.site_img = num
-                    ///////////////////////////////////////////////////////////////////////////////////////////////
                     let img_comp = document.getElementById('imgdiv');
                     let img_box = img_comp.childNodes;
                     console.log(img_box[1]);
-                    img_box[1].src = '/assets/charts/' + SiteStats.site_img + '.png'
+                    img_box[1].src = '/assets/charts_clean/' + SiteStats.site_name + '.png'
                 };
             }
         }
@@ -216,10 +213,12 @@ function testcalc(SiteStat) {
         formData.append('M_TUR_Result', '0');
         formData.append('PARM_TUR', '0');
         formData.append('tSTAT_TUR', '0');
-    } else {
-        formData.append('M_TUR_Result', SiteStats.m_tur_result);
+    }
+    else if (document.getElementById('m_tur_result').value !== 'N/A') {
         formData.append('PARM_TUR', SiteStats.param_tur);
         formData.append('tSTAT_TUR', SiteStats.tstat_tur);
+        formData.append('M_TUR_Result', document.getElementById('m_tur_result').value);
+
     }
     formData.append('M_DS_Rain', document.getElementById('m_ds_rain').value);
     formData.append('M_Temp', document.getElementById('m_temp').value);

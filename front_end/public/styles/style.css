@@ -50,12 +50,13 @@ h3 {
 
 .mapandtable {
     width: 45vw;
+    height: auto;
     /*margin: auto;*/
     /*padding: 5px;*/
 }
 
 #mapid {
-    height: 400px;
+    height: 40vh;
     border: 5px solid #355e3b;
 }
 
@@ -80,9 +81,7 @@ h3 {
     color: #d3d3d3;
 }
 
-.paramsheading {
 
-}
 #theButton:hover {background-color: #3f704D}
 
 #theButton:active {
@@ -141,10 +140,14 @@ h3 {
 
 .charts {
     margin-top: 2vh;
-    margin-bottom: 1vh;
+    margin-bottom: 2vh;
     margin-left: 10vw;
     margin-right: 10vw;
-    padding: inherit;
+}
+
+.param {
+    color: #d3d3d3;
+    color: black;
 }
 
 

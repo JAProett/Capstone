@@ -31,44 +31,44 @@
                         <tr>
                             <th>Intercept</th>
                             <td></td>
-                            <td><input id="param_intercip" type="text" value=""></td>
+                            <td><input class="param" id="param_intercip" type="text" value=""></td>
                             <td><input class='tstat' id="tstat_intercip" type="text" value=""></td>
 
                         </tr>
                         <tr>
                             <th>Water Temp (C)</th>
                             <td><input id="m_wt_result" type="text" value=""></td>
-                            <td><input id="param_wt" type="text" value=""></td>
+                            <td><input class="param" id="param_wt" type="text" value=""></td>
                             <td><input class='tstat' id="tstat_wt" type="text" value=""></td>
                         </tr>
                         <tr>
                             <th>PH</th>
                             <td><input id="m_ph_result" type="text" value=""></td>
-                            <td><input id="param_ph" type="text" value=""></td>
+                            <td><input class="param" id="param_ph" type="text" value=""></td>
                             <td><input class='tstat' id="tstat_ph" type="text" value=""></td>
                         </tr>
                         <tr>
                             <th>Dissolved O2</th>
                             <td><input id="m_dis_result" type="text" value=""></td>
-                            <td><input id="param_dis" type="text" value=""></td>
+                            <td><input class="param" id="param_dis" type="text" value=""></td>
                             <td><input class='tstat' id="tstat_dis" type="text" value=""></td>
                         </tr>
                         <tr>
                             <th>Turbulence</th>
                             <td><input id="m_tur_result" type="text" value=""></td>
-                            <td><input id="param_tur" type="text" value=""></td>
+                            <td><input class="param" id="param_tur" type="text" value=""></td>
                             <td><input class='tstat' id="tstat_tur" type="text" value=""></td>
                         </tr>
                         <tr>
                             <th>Days Since Rain</th>
                             <td><input id="m_ds_rain" type="text" value=""></td>
-                            <td><input id="param_ds_rain" type="text" value=""></td>
+                            <td><input class="param" id="param_ds_rain" type="text" value=""></td>
                             <td><input class='tstat' id="tstat_ds_rain" type="text" value=""></td>
                         </tr>
                         <tr>
                             <th>Ambient Temp (C)</th>
                             <td><input id="m_temp" type="text" value=""></td>
-                            <td><input id="param_amb_temp" type="text" value=""></td>
+                            <td><input class="param" id="param_amb_temp" type="text" value=""></td>
                             <td><input class='tstat' id="tstat_amb_temp" type="text" value=""></td>
                         </tr>
                     </table>
@@ -82,10 +82,10 @@
         </div>
         <div class="discovery">
             <div id='imgdiv'>
-                <img class="graphic" src="/assets/charts/3.png" alt="">
+                <img class="graphic" src="/assets/charts_clean/Barton_Creek_Between_Dams_Upstream_of_Pool.png" alt="">
             </div>
+            <!-- <h3>Predicted E.Coli Levels</h3> -->
             <div class="charts">
-                <h3>Predicted E.Coli Levels</h3>
                 <table class="resultstable">
                     <tr>
                         <th>E.Coli Estimate (colonies/100ml):</th>
@@ -94,6 +94,10 @@
                     <tr>
                         <th>E.Coli Estimate @1std (colonies/100ml):</th>
                         <td><input class="results" id="calc_hi_val" type="text" value=""></td>
+                    </tr>
+                    <tr>
+                        <th> Adjusted R2:</th>
+                        <td><input class="results" id="r2" type="text" value="" readonly></td>
                     </tr>
                 </table>
                 <a href="" id="calc">Calculate</a>
