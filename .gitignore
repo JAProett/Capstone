@@ -1,4 +1,4 @@
 node_modules
 .env
 .DS_Store
-apiCalls/__pycache__/
+*__pycache__/
